@@ -25,10 +25,18 @@ Dummy::Application.configure do
   # Raise exception on mass assignment protection for Active Record models
   config.active_record.mass_assignment_sanitizer = :strict
 
+  # This is deprecated in Rails 4.1 and causes an error.
+  unless Rails.version >= '4.1.0'
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   config.active_record.auto_explain_threshold_in_seconds = 0.5
-
+  end
+  
+  # Rails 4.1 whines if this is not set.
+  if Rails.version >= '4.1.0'
+    config.eager_load = false
+  end
+  
   # Do not compress assets
   config.assets.compress = false
 
